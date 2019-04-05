@@ -3,3 +3,17 @@
     width: 50vw;
     margin: 50px auto;
 }
+
+.instructions {
+    margin: 50px auto;
+}
+
+.button {
+    width: 100%;
+    margin: 50px auto;
+    background-color: rgb(0,0,0)
+}
+
+.logo {
+    width: 150px;
+}

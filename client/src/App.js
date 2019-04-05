@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import axios from 'axios';
 
 class App extends Component {
 
@@ -27,6 +28,7 @@ class App extends Component {
     this.changeZip = this.changeZip.bind(this);
     this.changePhone = this.changePhone.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   changeFirstName(event) {this.setState({firstName: event.target.value});}
@@ -39,6 +41,14 @@ class App extends Component {
   changeZip(event) {this.setState({zip: event.target.value});}
   changePhone(event) {this.setState({phone: event.target.value});}
   changeEmail(event) {this.setState({email: event.target.value});}
+
+  onSubmit() {
+    axios.post('/register', {
+      firstName: this.state.firstName
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+  }    
 
   render() {
     return (
@@ -74,7 +84,7 @@ class App extends Component {
         <div>Email: 
           <input value={this.state.email} onChange={this.changeEmail}></input>
         </div>
-        <button>Submit</button>
+        <button onClick={this.onSubmit}>Submit</button>
       </div>
     );
   }

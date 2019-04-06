@@ -55,6 +55,14 @@ class App extends Component {
     const emailField = document.getElementById('validationCustom10');
     const okButton = document.getElementById('okButton');
 
+    // $(".alert").alert()
+
+    // window.setTimeout(function() {
+    //   $(".alert").fadeTo(500, 0).slideUp(500, function(){
+    //       $(this).remove(); 
+    //   });
+    // }, 4000);
+
     zipField.addEventListener('keyup', function(event) {
       var regex = /^\d{5}$/;
       if(regex.test(zipField.value) == false) {
@@ -118,11 +126,10 @@ class App extends Component {
         : */}
 
 <div className="alert alert-success" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span type="button" className="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
-  </button>
-  <h4 className="alert-heading">Congratulations!</h4>
-  <p>You are now a member of Availity.</p>
+  </span>
+  <strong>Success!</strong> You have been signed in successfully!
 </div>
 
           <form className="needs-validation App" id="signUpForm" onSubmit={this.onSubmit} >
@@ -179,7 +186,6 @@ class App extends Component {
           </form>
         {/* } */}
         {/* <Route exact path="/sub" /> */}
-        
       </div>
     );
   }

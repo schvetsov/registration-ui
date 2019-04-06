@@ -23,7 +23,7 @@ class App extends Component {
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   handleChange = name => event => {
@@ -43,28 +43,58 @@ class App extends Component {
         phone: this.state.phone,
         email: this.state.email
       })
-      .then(this.setState({registered: true}))
+      .then(res => console.log(res))
       .catch(err => console.log(err));
   }    
 
   componentDidMount() {
-      // 'use strict';
-      window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-              console.log('propagating')
-            }
-            form.classList.add('was-validated');
-            console.log('validated')
-          }, false);
-        });
-      }, false);
+    const signUpForm = document.getElementById('signUpForm');
+    const npiField = document.getElementById('validationCustom03');
+    const zipField = document.getElementById('validationCustom08');
+    const phoneField = document.getElementById('validationCustom09');
+    const emailField = document.getElementById('validationCustom10');
+    const okButton = document.getElementById('okButton');
+
+    zipField.addEventListener('keyup', function(event) {
+      var regex = /^\d{5}$/;
+      if(regex.test(zipField.value) == false) {
+        event.target.setCustomValidity("Please enter a valid zip code")
+        return false;
+      } else {
+        event.target.setCustomValidity("")
+        return true;
+      }
+    });
+
+    phoneField.addEventListener('keyup', function(event) {
+
+    });
+      
+    npiField.addEventListener('keyup', function(event) {
+      var regex = /^\d{10}$/;
+      if (regex.test(npiField.value) == false) {
+        event.target.setCustomValidity("Please enter a valid NPI")
+        return false; 
+      } else {
+        event.target.setCustomValidity("")
+        return true;
+      }
+    });
+
+    emailField.addEventListener('keyup', function (event) {
+      var regex  = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (regex.test(emailField.value) == false) {
+        event.target.setCustomValidity('Please enter a valid Email')
+        return false;
+      } else {
+        event.target.setCustomValidity("")
+        return true;
+      }
+    });
+      
+    okButton.addEventListener('click', function (event) {
+      signUpForm.submit();
+    });
   }
 
   render() {
@@ -73,7 +103,7 @@ class App extends Component {
         <div className="pos-f-t">
           <nav className="navbar navbar-dark bg-dark">
             <div className="container">
-              <a className="navbar-brand" onClick={() => this.setState({registered: false})}>
+              <a className="navbar-brand" >
                 <img className="logo" src={require('./availity.png')} />
               </a>
               <div className="navbar-text">
@@ -83,101 +113,73 @@ class App extends Component {
             
           </nav>
         </div>
-        {this.state.registered ?
+        {/* {this.state.registered ?
           <div className="App">You are now registered with Availity!</div>
-        :
-          <form className="needs-validation App" noValidate>
+        : */}
+
+<div className="alert alert-success" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 className="alert-heading">Congratulations!</h4>
+  <p>You are now a member of Availity.</p>
+</div>
+
+          <form className="needs-validation App" id="signUpForm" onSubmit={this.onSubmit} >
             <div className="instructions">Please complete the form below and click submit</div>
             <div className="form-row">
               <div className="col-md-4 mb-3">
                 <label htmlFor="validationCustom01">First name</label>
                 <input type="text" className="form-control" id="validationCustom01" placeholder="First name" value={this.state.firstName} onChange={this.handleChange('firstName')} required/>
-                <div className="valid-feedback">
-                  Looks good!
-                </div>
-                <div className="invalid-feedback">
-                  Please provide a valid first name.
-                </div>
               </div>
               <div className="col-md-4 mb-3">
                 <label htmlFor="validationCustom02">Last name</label>
                 <input type="text" className="form-control" id="validationCustom02" placeholder="Last name" value={this.state.lastName} onChange={this.handleChange('lastName')} required/>
-                <div className="valid-feedback">
-                  Looks good!
-                </div>
-                <div className="invalid-feedback">
-                  Please provide a valid last name.
-                </div>
               </div>
               <div className="col-md-4 mb-3">
                 <label htmlFor="validationCustom03">NPI</label>
-                <input type="text" className="form-control" id="validationCustom02" placeholder="NPI" value={this.state.npi} onChange={this.handleChange('npi')} required/>
-                <div className="valid-feedback">
-                  Looks good!
-                </div>
-                <div className="invalid-feedback">
-                  Please provide a valid NPI.
-                </div>
+                <input type="text" className="form-control" id="validationCustom03" placeholder="NPI" value={this.state.npi} onChange={this.handleChange('npi')} required/>
               </div>
             </div>
             <div className="form-row">
                 <div className="col-md-6 mb-3">
                 <label htmlFor="validationCustom03">Address 1</label>
-                  <input type="text" className="form-control" id="validationCustom03" placeholder="City" value={this.state.address1} onChange={this.handleChange('address1')} required/>
-                  <div className="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div className="invalid-feedback">
-                    Please provide a valid address.
-                  </div>
+                  <input type="text" className="form-control" id="validationCustom04" placeholder="City" value={this.state.address1} onChange={this.handleChange('address1')} required/>
                 </div>
                 <div className="col-md-6 mb-3">
                 <label htmlFor="validationCustom03">Address 2</label>
-                  <input type="text" className="form-control" id="validationCustom03" placeholder="City" value={this.state.address2} onChange={this.handleChange('address2')} required/>
-                  <div className="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div className="invalid-feedback">
-                    Please provide a valid address.
-                  </div>
+                  <input type="text" className="form-control" id="validationCustom05" placeholder="City" value={this.state.address2} onChange={this.handleChange('address2')} required/>
                 </div>
             </div>
             <div className="form-row">
               <div className="col-md-6 mb-3">
                 <label htmlFor="validationCustom04">City</label>
-                <input type="text" className="form-control" id="validationCustom03" placeholder="City" value={this.state.city} onChange={this.handleChange('city')} required/>
-                <div className="valid-feedback">
-                  Looks good!
-                </div>
-                <div className="invalid-feedback">
-                  Please provide a valid city.
-                </div>
+                <input type="text" className="form-control" id="validationCustom06" placeholder="City" value={this.state.city} onChange={this.handleChange('city')} required/>
               </div>
               <div className="col-md-3 mb-3">
                 <label htmlFor="validationCustom05">State</label>
-                <input type="text" className="form-control" id="validationCustom04" placeholder="State" value={this.state.homeState} onChange={this.handleChange('homeState')} required/>
-                <div className="valid-feedback">
-                  Looks good!
-                </div>
-                <div className="invalid-feedback">
-                  Please provide a valid state.
-                </div>
+                <input type="text" className="form-control" id="validationCustom07" placeholder="State" value={this.state.homeState} onChange={this.handleChange('homeState')} required/>
               </div>
               <div className="col-md-3 mb-3">
                 <label htmlFor="validationCustom06">Zip</label>
-                <input type="text" className="form-control" id="validationCustom05" placeholder="Zip" value={this.state.zip} onChange={this.handleChange('zip')} required/>
-                <div className="valid-feedback">
-                  Looks good!
-                </div>
-                <div className="invalid-feedback">
-                  Please provide a valid zip.
-                </div>
+                <input type="text" className="form-control" id="validationCustom08" placeholder="Zip" value={this.state.zip} onChange={this.handleChange('zip')} required/>
               </div>
             </div>
-            <button className="btn btn-primary button" type="submit" >Submit</button>
+            <div className="form-row">
+                <div className="col-md-6 mb-3">
+                <label htmlFor="validationCustom03">Phone</label>
+                  <input type="text" className="form-control" id="validationCustom09" placeholder="Phone" value={this.state.phone} onChange={this.handleChange('phone')} required/>
+                </div>
+                <div className="col-md-6 mb-3">
+                <label htmlFor="validationCustom03">Email</label>
+                  <input type="email" className="form-control" id="validationCustom10" placeholder="Email" value={this.state.email} onChange={this.handleChange('email')} required/>
+                </div>
+            </div>
+            <button className="btn btn-primary button" id="okButton" type="submit" >Submit</button>
           </form>
-        }
-        <Route exact path="/sub" />
+        {/* } */}
+        {/* <Route exact path="/sub" /> */}
+        
       </div>
     );
   }

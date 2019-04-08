@@ -9,13 +9,16 @@
 
 In terminal:
 
-<code>git clone https://github.com/schvetsov/registration-ui.git</code>
-<code>cd registration-ui</code>
+<code>git clone https://github.com/schvetsov/registration-ui.git</code><br>
+<code>cd registration-ui</code><br>
+<code>npm install</code><br>
+<code>cd client</code><br>
 <code>npm install</code>
-<code>cd client</code>
-<code>npm install</code>
+
 <code>npm start</code>
+
 <code>cd ..</code>
+
 <code>node index.js</code>
 
 ## You Should See This

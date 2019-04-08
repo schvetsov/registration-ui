@@ -1,67 +1,45 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
-import { Route, Link } from 'react-router-dom';
-import Submitted from './pages/Submitted';
+import { connect } from 'react-redux';
+import Navbar from './navbar/Navbar';
+import Form from './form/Form';
 
 class App extends Component {
 
   constructor() {
     super();
-    this.state = {
-      firstName: '',
-      lastName: '',
-      npi: '',
-      address1: '',
-      address2: '',
-      city: '',
-      homeState: '',
-      zip: '',
-      phone: '',
-      email: '',
-      registered: false
-    }
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   handleChange = name => event => {
-    this.setState({[name]: event.target.value});
+    this.props.dispatch({ type: name, value: event.target.value })
   }
 
   onSubmit() {
-      axios.post('/register', {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        npi: this.state.npi,
-        address1: this.state.address1,
-        address2: this.state.address2,
-        city: this.state.city,
-        homeState: this.state.homeState,
-        zip: this.state.zip,
-        phone: this.state.phone,
-        email: this.state.email
-      })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    axios.post('/register', {
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
+      npi: this.props.npi,
+      address1: this.props.address1,
+      address2: this.props.address2,
+      city: this.props.city,
+      homeState: this.props.homeState,
+      zip: this.props.zip,
+      phone: this.props.phone,
+      email: this.props.email
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
   }    
 
   componentDidMount() {
-    const signUpForm = document.getElementById('signUpForm');
+
     const npiField = document.getElementById('validationCustom03');
     const zipField = document.getElementById('validationCustom08');
     const phoneField = document.getElementById('validationCustom09');
     const emailField = document.getElementById('validationCustom10');
-    const okButton = document.getElementById('okButton');
-
-    // $(".alert").alert()
-
-    // window.setTimeout(function() {
-    //   $(".alert").fadeTo(500, 0).slideUp(500, function(){
-    //       $(this).remove(); 
-    //   });
-    // }, 4000);
 
     zipField.addEventListener('keyup', function(event) {
       var regex = /^\d{5}$/;
@@ -75,7 +53,14 @@ class App extends Component {
     });
 
     phoneField.addEventListener('keyup', function(event) {
-
+      var regex = /^\d{10}$/;
+      if (regex.test(phoneField.value) == false) {
+        event.target.setCustomValidity("Please enter a valid phone number")
+        return false; 
+      } else {
+        event.target.setCustomValidity("")
+        return true;
+      }
     });
       
     npiField.addEventListener('keyup', function(event) {
@@ -99,96 +84,40 @@ class App extends Component {
         return true;
       }
     });
-      
-    okButton.addEventListener('click', function (event) {
-      signUpForm.submit();
-    });
   }
 
   render() {
+
     return (
+
       <div>
-        <div className="pos-f-t">
-          <nav className="navbar navbar-dark bg-dark">
-            <div className="container">
-              <a className="navbar-brand" >
-                <img className="logo" src={require('./availity.png')} />
-              </a>
-              <div className="navbar-text">
-                Registration
-              </div>
-            </div>
-            
-          </nav>
-        </div>
-        {/* {this.state.registered ?
-          <div className="App">You are now registered with Availity!</div>
-        : */}
 
-<div className="alert alert-success" role="alert">
-  <span type="button" className="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </span>
-  <strong>Success!</strong> You have been signed in successfully!
-</div>
+        <Navbar />
 
-          <form className="needs-validation App" id="signUpForm" onSubmit={this.onSubmit} >
-            <div className="instructions">Please complete the form below and click submit</div>
-            <div className="form-row">
-              <div className="col-md-4 mb-3">
-                <label htmlFor="validationCustom01">First name</label>
-                <input type="text" className="form-control" id="validationCustom01" placeholder="First name" value={this.state.firstName} onChange={this.handleChange('firstName')} required/>
-              </div>
-              <div className="col-md-4 mb-3">
-                <label htmlFor="validationCustom02">Last name</label>
-                <input type="text" className="form-control" id="validationCustom02" placeholder="Last name" value={this.state.lastName} onChange={this.handleChange('lastName')} required/>
-              </div>
-              <div className="col-md-4 mb-3">
-                <label htmlFor="validationCustom03">NPI</label>
-                <input type="text" className="form-control" id="validationCustom03" placeholder="NPI" value={this.state.npi} onChange={this.handleChange('npi')} required/>
-              </div>
-            </div>
-            <div className="form-row">
-                <div className="col-md-6 mb-3">
-                <label htmlFor="validationCustom03">Address 1</label>
-                  <input type="text" className="form-control" id="validationCustom04" placeholder="City" value={this.state.address1} onChange={this.handleChange('address1')} required/>
-                </div>
-                <div className="col-md-6 mb-3">
-                <label htmlFor="validationCustom03">Address 2</label>
-                  <input type="text" className="form-control" id="validationCustom05" placeholder="City" value={this.state.address2} onChange={this.handleChange('address2')} required/>
-                </div>
-            </div>
-            <div className="form-row">
-              <div className="col-md-6 mb-3">
-                <label htmlFor="validationCustom04">City</label>
-                <input type="text" className="form-control" id="validationCustom06" placeholder="City" value={this.state.city} onChange={this.handleChange('city')} required/>
-              </div>
-              <div className="col-md-3 mb-3">
-                <label htmlFor="validationCustom05">State</label>
-                <input type="text" className="form-control" id="validationCustom07" placeholder="State" value={this.state.homeState} onChange={this.handleChange('homeState')} required/>
-              </div>
-              <div className="col-md-3 mb-3">
-                <label htmlFor="validationCustom06">Zip</label>
-                <input type="text" className="form-control" id="validationCustom08" placeholder="Zip" value={this.state.zip} onChange={this.handleChange('zip')} required/>
-              </div>
-            </div>
-            <div className="form-row">
-                <div className="col-md-6 mb-3">
-                <label htmlFor="validationCustom03">Phone</label>
-                  <input type="text" className="form-control" id="validationCustom09" placeholder="Phone" value={this.state.phone} onChange={this.handleChange('phone')} required/>
-                </div>
-                <div className="col-md-6 mb-3">
-                <label htmlFor="validationCustom03">Email</label>
-                  <input type="email" className="form-control" id="validationCustom10" placeholder="Email" value={this.state.email} onChange={this.handleChange('email')} required/>
-                </div>
-            </div>
-            <button className="btn btn-primary button" id="okButton" type="submit" >Submit</button>
-          </form>
-        {/* } */}
-        {/* <Route exact path="/sub" /> */}
+        <Form 
+          onSubmit={this.onSubmit} 
+          handleChange={this.handleChange} 
+        />
+
       </div>
+
     );
+
   }
+
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  firstName: state.firstName,
+  lastName: state.lastName,
+  npi: state.npi,
+  address1: state.address1,
+  address2: state.address2,
+  city: state.city,
+  homeState: state.homeState,
+  zip: state.zip,
+  phone: state.phone,
+  email: state.email
+})
+
+export default connect(mapStateToProps)(App);

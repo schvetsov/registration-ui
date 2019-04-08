@@ -13,10 +13,12 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  //Dispatch state change to Redux
   handleChange = name => event => {
     this.props.dispatch({ type: name, value: event.target.value })
   }
 
+  //Submit form to Mongo
   onSubmit() {
     axios.post('/register', {
       firstName: this.props.firstName,
@@ -34,6 +36,7 @@ class App extends Component {
     .catch(err => console.log(err));
   }    
 
+  //Event listeners for form validation
   componentDidMount() {
 
     const npiField = document.getElementById('validationCustom03');

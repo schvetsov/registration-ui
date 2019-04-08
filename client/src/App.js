@@ -13,9 +13,13 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  //Dispatch state change to Redux
+  //Dispatch form changes to Redux
   handleChange = name => event => {
-    this.props.dispatch({ type: name, value: event.target.value })
+    const value = {
+      name: name,
+      newVal: event.target.value
+    }
+    this.props.dispatch({ type: 'CHANGEINPUT', value: value })
   }
 
   //Submit form to Mongo
@@ -38,7 +42,6 @@ class App extends Component {
 
   //Event listeners for form validation
   componentDidMount() {
-
     const npiField = document.getElementById('validationCustom03');
     const zipField = document.getElementById('validationCustom08');
     const phoneField = document.getElementById('validationCustom09');
@@ -55,21 +58,21 @@ class App extends Component {
       }
     });
 
-    phoneField.addEventListener('keyup', function(event) {
-      var regex = /^\s*(?:\+?(\d{1,3}))?[- (]*(\d{3})[- )]*(\d{3})[- ]*(\d{4})(?: *[x/#]{1}(\d+))?\s*$/;
-      if (regex.test(phoneField.value) == false) {
-        event.target.setCustomValidity("Please enter a valid phone number")
+    npiField.addEventListener('keyup', function(event) {
+      var regex = /^\d{10}$/;
+      if (regex.test(npiField.value) == false) {
+        event.target.setCustomValidity("Please enter a valid NPI")
         return false; 
       } else {
         event.target.setCustomValidity("")
         return true;
       }
     });
-      
-    npiField.addEventListener('keyup', function(event) {
-      var regex = /^\d{10}$/;
-      if (regex.test(npiField.value) == false) {
-        event.target.setCustomValidity("Please enter a valid NPI")
+
+    phoneField.addEventListener('keyup', function(event) {
+      var regex = /^\s*(?:\+?(\d{1,3}))?[- (]*(\d{3})[- )]*(\d{3})[- ]*(\d{4})(?: *[x/#]{1}(\d+))?\s*$/;
+      if (regex.test(phoneField.value) == false) {
+        event.target.setCustomValidity("Please enter a valid phone number")
         return false; 
       } else {
         event.target.setCustomValidity("")
@@ -90,24 +93,16 @@ class App extends Component {
   }
 
   render() {
-
     return (
-
       <div>
-
         <Navbar />
-
         <Form 
           onSubmit={this.onSubmit} 
           handleChange={this.handleChange} 
         />
-
       </div>
-
     );
-
   }
-
 }
 
 const mapStateToProps = (state) => ({

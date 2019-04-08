@@ -16,7 +16,7 @@ In terminal:
 <code>npm install</code><br>
 <code>npm start</code><br>
 
-In a new terminal window, in project root:
+In a new terminal window, in project root:<br>
 <code>node index.js</code><br>
 
 ## You Should See This

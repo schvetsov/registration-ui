@@ -46,7 +46,7 @@ const Form = (props) => {
         <div className="form-row">
             <div className="col-md-6 mb-3">
             <label htmlFor="validationCustom03">Phone</label>
-              <input type="text" className="form-control" id="validationCustom09"  data-format="+1 (ddd) ddd-dddd" value={props.phone} onChange={props.handleChange('phone')} required/>
+              <input type="text" className="form-control" id="validationCustom09"  placeholder="Phone" value={props.phone} onChange={props.handleChange('phone')} required/>
             </div>
             <div className="col-md-6 mb-3">
             <label htmlFor="validationCustom03">Email</label>

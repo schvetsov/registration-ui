@@ -15,7 +15,8 @@ In terminal:
 <code>cd client</code><br>
 <code>npm install</code><br>
 <code>npm start</code><br>
-<code>cd ..</code><br>
+
+In a new terminal window, in project root:
 <code>node index.js</code><br>
 
 ## You Should See This

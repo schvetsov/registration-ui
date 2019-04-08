@@ -56,7 +56,7 @@ class App extends Component {
     });
 
     phoneField.addEventListener('keyup', function(event) {
-      var regex = /^\d{10}$/;
+      var regex = /^\s*(?:\+?(\d{1,3}))?[- (]*(\d{3})[- )]*(\d{3})[- ]*(\d{4})(?: *[x/#]{1}(\d+))?\s*$/;
       if (regex.test(phoneField.value) == false) {
         event.target.setCustomValidity("Please enter a valid phone number")
         return false; 

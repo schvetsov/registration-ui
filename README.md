@@ -13,13 +13,10 @@ In terminal:
 <code>cd registration-ui</code><br>
 <code>npm install</code><br>
 <code>cd client</code><br>
-<code>npm install</code>
-
-<code>npm start</code>
-
-<code>cd ..</code>
-
-<code>node index.js</code>
+<code>npm install</code><br>
+<code>npm start</code><br>
+<code>cd ..</code><br>
+<code>node index.js</code><br>
 
 ## You Should See This
 

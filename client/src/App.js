@@ -38,7 +38,7 @@ class App extends Component {
 
     zipField.addEventListener('keyup', function(event) {
       var regex = /^\d{5}$/;
-      if(regex.test(zipField.value) == false) {
+      if(regex.test(zipField.value) === false) {
         event.target.setCustomValidity("Please enter a valid zip code")
         return false;
       } else {
@@ -49,7 +49,7 @@ class App extends Component {
 
     npiField.addEventListener('keyup', function(event) {
       var regex = /^\d{10}$/;
-      if (regex.test(npiField.value) == false) {
+      if (regex.test(npiField.value) === false) {
         event.target.setCustomValidity("Please enter a valid NPI")
         return false; 
       } else {
@@ -60,7 +60,7 @@ class App extends Component {
 
     phoneField.addEventListener('keyup', function(event) {
       var regex = /^\s*(?:\+?(\d{1,3}))?[- (]*(\d{3})[- )]*(\d{3})[- ]*(\d{4})(?: *[x/#]{1}(\d+))?\s*$/;
-      if (regex.test(phoneField.value) == false) {
+      if (regex.test(phoneField.value) === false) {
         event.target.setCustomValidity("Please enter a valid phone number")
         return false; 
       } else {
@@ -70,8 +70,8 @@ class App extends Component {
     });
 
     emailField.addEventListener('keyup', function (event) {
-      var regex  = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (regex.test(emailField.value) == false) {
+      var regex  = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (regex.test(emailField.value) === false) {
         event.target.setCustomValidity('Please enter a valid Email')
         return false;
       } else {
@@ -94,17 +94,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  firstName: state.firstName,
-  lastName: state.lastName,
-  npi: state.npi,
-  address1: state.address1,
-  address2: state.address2,
-  city: state.city,
-  homeState: state.homeState,
-  zip: state.zip,
-  phone: state.phone,
-  email: state.email
-})
+const mapStateToProps = state => Object.assign({}, state)
 
 export default connect(mapStateToProps)(App);

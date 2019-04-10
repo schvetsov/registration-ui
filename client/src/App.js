@@ -25,16 +25,7 @@ class App extends Component {
   //Submit form to Mongo
   onSubmit() {
     axios.post('/register', {
-      firstName: this.props.firstName,
-      lastName: this.props.lastName,
-      npi: this.props.npi,
-      address1: this.props.address1,
-      address2: this.props.address2,
-      city: this.props.city,
-      homeState: this.props.homeState,
-      zip: this.props.zip,
-      phone: this.props.phone,
-      email: this.props.email
+      state: this.props
     })
     .then(res => console.log(res))
     .catch(err => console.log(err));

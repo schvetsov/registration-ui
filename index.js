@@ -11,10 +11,10 @@ app.post('/register', (req, res) => {
     let myData = new User(req.body.state);
     myData.save()
       .then(item => {
-        res.send("item saved to database");
+        res.send("Saved");
       })
       .catch(err => {
-        res.status(400).send("unable to save to database");
+        res.status(400).send("Error");
       });
 })
 

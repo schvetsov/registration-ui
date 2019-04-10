@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/register', (req, res) => {
-    let myData = new User(req.body);
+    let myData = new User(req.body.state);
     myData.save()
       .then(item => {
         res.send("item saved to database");

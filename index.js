@@ -8,14 +8,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/register', (req, res) => {
-    let myData = new User(req.body.state);
+    let myData = new User(req.body);
     myData.save()
-      .then(item => {
-        res.send("Saved");
-      })
-      .catch(err => {
-        res.status(400).send("Error");
-      });
+      .then(item => res.send(item))
+      .catch(err => res.status(400).send(err));
 })
 
 var port = process.env.PORT || 5000;

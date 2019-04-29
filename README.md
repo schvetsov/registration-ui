@@ -19,6 +19,3 @@ In terminal:
 In a new terminal window, in project root:<br>
 <code>node index.js</code><br>
 
-## You Should See This
-
-![Screenshot](screenshot1.png)

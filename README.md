@@ -1,4 +1,10 @@
-## How to Use
+## Description
+
+Stack: React, Redux, Axios, Bootstrap, Node, Express, Mongo
+
+A form with validation that once submitted POSTs the data to a database
+
+## Installation Instructions
 
 *You will need to create a config.js file in the root after you clone the repo, paste the following code and add your own credentials:
 
